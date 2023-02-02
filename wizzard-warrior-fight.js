@@ -10,12 +10,12 @@ class Wizard {
         this.specialCount = 1;
     }
     lightningBolt(opponent) {
-        console.log(`Wizard ${this.name} attacks ${opponent.class} ${opponent.name} with Lightning Bolt for ${this.power - opponent.armor}`);
-        opponent.takeDamage(this.power);
+        console.log(`Wizard ${this.name} attacks ${opponent.class} ${opponent.name} with Lightning Bolt for ${this.power * 2 - opponent.armor}`);
+        opponent.takeDamage(this.power * 2);
     }
     fireBall(opponent) {
-        console.log(`Wizard ${this.name} attacks ${opponent.class} ${opponent.name} with Fire Ball for ${this.power * 1.5 - opponent.armor}`);
-        opponent.takeDamage(this.power * 1.5)
+        console.log(`Wizard ${this.name} attacks ${opponent.class} ${opponent.name} with Fire Ball for ${this.power * 1.75 - opponent.armor}`);
+        opponent.takeDamage(this.power * 1.75)
     }
     fullHeal(opponent) {
         if (this.specialCount <= 0) {
@@ -48,12 +48,12 @@ class Warrior {
         this.specialCount = 1;
     }
     axeSwing(opponent) {
-        console.log(`Warrior ${this.name} attacks ${opponent.class} ${opponent.name} with Axe Swing for ${this.power * 2 - opponent.armor}`);
-        opponent.takeDamage(this.power * 2);
+        console.log(`Warrior ${this.name} attacks ${opponent.class} ${opponent.name} with Axe Swing for ${this.power * 1.5 - opponent.armor}`);
+        opponent.takeDamage(this.power * 1.5);
     }
     whirlwind(opponent) {
-        console.log(`Warrior ${this.name} attacks ${opponent.class} ${opponent.name} with WhirlWind for ${this.power * 1.75 - opponent.armor}`);
-        opponent.takeDamage(this.power * 1.75);
+        console.log(`Warrior ${this.name} attacks ${opponent.class} ${opponent.name} with WhirlWind for ${this.power - opponent.armor}`);
+        opponent.takeDamage(this.power);
     }
     beserk(opponent) {
         if (this.specialCount <= 0) {
@@ -88,13 +88,20 @@ class Rogue {
         this.specialCount = 1;
     }
     shank(opponent) {
-
+        console.log(`Rogue ${this.name} attacks ${opponent.class} ${opponent.name} with Shank for ${this.power * 1.75 - opponent.armor}`);
+        opponent.takeDamage(this.power * 1.75);
     }
     slash(opponent) {
-
+        console.log(`Rogue ${this.name} attacks ${opponent.class} ${opponent.name} with Slash for ${this.power * 1.25 - opponent.armor}`);
+        opponent.takeDamage(this.power * 1.25);
     }
     backStab(opponent) {
-
+        if (Math.ceil(Math.random() * 2) === 1) {
+            console.log(`Rogue ${this.name} throws a smoke grenade and sneaks around ${opponent.class} ${opponent.name} to attack with Back Stab for ${this.power * 3 - opponent.armor}`);
+            opponent.takeDamage(this.power * 3);
+        } else {
+            console.log(`Rogue ${this.name} throws a smoke grenade and trys to sneak around ${opponent.class} ${opponent.name} but fails and cannot attack`)
+        }
     }
 
     takeDamage(damage) {
@@ -111,9 +118,9 @@ New Rogue Class
 special will be a 90 damage hit with 50% probability of success
 */
 
-let warrior = new Warrior('Bobby', 4, 25, 20)
-let wizard = new Wizard('Billy', 3, 10, 40)
-let rogue = new Rogue('Bob', 5, 15, 30)
+let warrior = new Warrior('Bobby', 4, 30, 20)
+let wizard = new Wizard('Billy', 3, 15, 40)
+let rogue = new Rogue('Bob', 5, 20, 30)
 
 /*
 Automatic Fighting:
@@ -134,37 +141,48 @@ const chooseCharacters = () => {
             charDefend = charArray[randomNum3()];
         }
     }
-    return charAttack, charDefend
+    return [charAttack, charDefend];
 }
 //this needs a lot of attention
-const chooseAttack = (character) => {
-    let wizard = [lightningBolt, fireBall, fullHeal];
-    let warrior = [axeSwing, whirlwind, beserk];
-    let rogue = [shank, slash, backStab];
-    let Attack = 
+const chooseAttack = (attackChar) => {
+    let wizardAttacks = [wizard.lightningBolt, wizard.fireBall, wizard.fullHeal];
+    let warriorAttacks = [warrior.axeSwing, warrior.whirlwind, warrior.beserk];
+    let rogueAttacks = [rogue.shank, rogue.slash, rogue.backStab];
 
-}
-//this might almost work
-const autoFight = () => {
-    while (warrior.health > 0 && wizard.health > 0 && rogue.health > 0) {
-        chooseCharacters();
-        let attack = chooseAttack(charAttack);
-         return charAttack.attack(charDefend);
+    if(attackChar === wizard) {
+        return attack = wizardAttacks[randomNum3()];
+    } else if (attackChar === warrior) {
+        return attack = warriorAttacks[randomNum3()];
+    } else {
+        return attack = rogueAttacks[randomNum3()];
     }
 }
 
+//this might almost work
+const autoFight = () => {
+    while (warrior.health > 0 && wizard.health > 0 && rogue.health > 0) {
+        let characters = chooseCharacters();
+        console.log(characters);
+        let attack = chooseAttack(characters[0])
+        console.log(attack);
+        let charAttack = characters[0];
+        let charDefend = characters[1];
+        return charAttack[attack(charDefend.class)];
+    }
+}
+autoFight();
 
 
 
 
 
 // warrior.beserk(wizard);
-// wizard.fullHeal(warrior);
+// rogue.shank(warrior);
 // warrior.beserk(wizard);
-// warrior.axeSwing(wizard);
+// rogue.slash(wizard);
 // wizard.fireBall(warrior);
 // warrior.whirlwind(wizard);
-// warrior.axeSwing(wizard);
+// rogue.backStab(wizard);
 // wizard.lightningBolt(warrior);
 // warrior.axeSwing(wizard);
 
