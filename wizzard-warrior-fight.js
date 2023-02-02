@@ -30,8 +30,7 @@ class Wizard {
     takeDamage(damage) {
         let actualDamage = damage - this.armor;
         this.health -= actualDamage;
-        console.log(`Wizard ${this.name} takes ${actualDamage} damage!`);
-        console.log(`Wizard ${this.name} is at ${this.health} health!`);
+        console.log(`Wizard ${this.name} takes ${actualDamage} damage and has ${this.health} left!`);
         if (this.health <= 0) {
             console.log(`${this.name} has been slain!`);
         }
@@ -71,32 +70,109 @@ class Warrior {
     takeDamage(damage) {
         let actualDamage = damage - this.armor;
         this.health -= actualDamage;
-        console.log(`Warrior ${this.name} takes ${actualDamage} damage!`);
-        console.log(`Warrior ${this.name} is at ${this.health} health!`);
+        console.log(`Warrior ${this.name} takes ${actualDamage} damage and has ${this.health} left!`);
         if(this.health <= 0) {
             console.log(`${this.name} has been slain!`);
         }
     }
 }
 
-let warrior = new Warrior('Bobby',4,25,20)
-let wizard = new Wizard('Billy',17,10,40)
+class Rogue {
+    constructor(name, age, armor, power) {
+        this.class = 'Rogue';
+        this.name = name;
+        this.age = age;
+        this.armor = armor;
+        this.power = power;
+        this.health = 100;
+        this.specialCount = 1;
+    }
+    shank(opponent) {
+
+    }
+    slash(opponent) {
+
+    }
+    backStab(opponent) {
+
+    }
+
+    takeDamage(damage) {
+        let actualDamage = damage - this.armor;
+        this.health -= actualDamage;
+        console.log(`Rogue ${this.name} takes ${actualDamage} damage and has ${this.health} left!`);
+        if(this.health <= 0) {
+            console.log(`${this.name} has been slain!`);
+        }
+    }
+}
+/*
+New Rogue Class
+special will be a 90 damage hit with 50% probability of success
+*/
+
+let warrior = new Warrior('Bobby', 4, 25, 20)
+let wizard = new Wizard('Billy', 3, 10, 40)
+let rogue = new Rogue('Bob', 5, 15, 30)
+
+/*
+Automatic Fighting:
+create a random attack function
+put the random attack function in a loop
+Use a conditional to check for a player death each iteration, if player dead, end loop
+*/
+const randomNum3 = () => Math.floor(Math.random() * 3);
+
+//Selects random attacking and defending characters for each call
+//this works
+const chooseCharacters = () => {
+    let charArray = [wizard, warrior, rogue];
+    let charAttack = charArray[randomNum3()];
+    let charDefend = charArray[randomNum3()];
+    if(charAttack === charDefend) {
+        while(charAttack === charDefend) {
+            charDefend = charArray[randomNum3()];
+        }
+    }
+    return charAttack, charDefend
+}
+//this needs a lot of attention
+const chooseAttack = (character) => {
+    let wizard = [lightningBolt, fireBall, fullHeal];
+    let warrior = [axeSwing, whirlwind, beserk];
+    let rogue = [shank, slash, backStab];
+    let Attack = 
+
+}
+//this might almost work
+const autoFight = () => {
+    while (warrior.health > 0 && wizard.health > 0 && rogue.health > 0) {
+        chooseCharacters();
+        let attack = chooseAttack(charAttack);
+         return charAttack.attack(charDefend);
+    }
+}
 
 
-warrior.beserk(wizard);
-wizard.fullHeal(warrior);
-warrior.beserk(wizard);
-warrior.axeSwing(wizard);
-wizard.fireBall(warrior);
-warrior.whirlwind(wizard);
-warrior.axeSwing(wizard);
-wizard.lightningBolt(warrior);
-warrior.axeSwing(wizard);
+
+
+
+
+// warrior.beserk(wizard);
+// wizard.fullHeal(warrior);
+// warrior.beserk(wizard);
+// warrior.axeSwing(wizard);
+// wizard.fireBall(warrior);
+// warrior.whirlwind(wizard);
+// warrior.axeSwing(wizard);
+// wizard.lightningBolt(warrior);
+// warrior.axeSwing(wizard);
 
 /*
 Could add things like multiple characters fighting at once
 More classes in the mix
 extended classes?
 for in loops?
-automatic fighting?
+Could add dexterity to classes which gives a random chance of dodging attacks using a random number generator
 */
+
