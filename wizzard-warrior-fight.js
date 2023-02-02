@@ -130,8 +130,7 @@ Use a conditional to check for a player death each iteration, if player dead, en
 */
 const randomNum3 = () => Math.floor(Math.random() * 3);
 
-//Selects random attacking and defending characters for each call
-//this works
+//Returns a random character
 const chooseCharacters = () => {
     let charArray = [wizard, warrior, rogue];
     let charAttack = charArray[randomNum3()];
@@ -143,7 +142,7 @@ const chooseCharacters = () => {
     }
     return [charAttack, charDefend];
 }
-//this needs a lot of attention
+//Returns a random attack function for the char input
 const chooseAttack = (attackChar) => {
     let wizardAttacks = [wizard.lightningBolt, wizard.fireBall, wizard.fullHeal];
     let warriorAttacks = [warrior.axeSwing, warrior.whirlwind, warrior.beserk];
@@ -162,12 +161,13 @@ const chooseAttack = (attackChar) => {
 const autoFight = () => {
     while (warrior.health > 0 && wizard.health > 0 && rogue.health > 0) {
         let characters = chooseCharacters();
-        console.log(characters);
-        let attack = chooseAttack(characters[0])
-        console.log(attack);
         let charAttack = characters[0];
         let charDefend = characters[1];
-        return charAttack[attack(charDefend.class)];
+        console.log(charAttack, charDefend);
+
+        let attack = chooseAttack(characters[0])
+        console.log(attack);
+        return charAttack[chooseAttack(charAttack)]
     }
 }
 autoFight();
