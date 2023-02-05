@@ -9,7 +9,7 @@ const forEach = (array, callback) => {
 
 //.filter() - function will return a new array copy filtered via the callback Function
 const filter = (array, callback) => {
-    let filteredArray = []
+    let filteredArray = [];
     for (let i = 0; i < array.length; i++) {
         if (callback(array[i]) === true) {
             filteredArray.push(array[i]);
@@ -19,9 +19,13 @@ const filter = (array, callback) => {
 }
 
 
-//.map() -
+//.map() - function will return a new array with each element modified according to the callback function
 const map = (array, callback) => {
-
+    let modifiedArray = [];
+    for (let i = 0; i < array.length; i++) {
+        modifiedArray.push(callback(array[i]));
+    }
+    return modifiedArray;
 }
 
 
