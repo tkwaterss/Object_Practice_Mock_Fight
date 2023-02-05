@@ -30,8 +30,12 @@ const map = (array, callback) => {
 
 
 
-//.reduce() coded out
-const reduce = (array, callback) => {
-    
+//.reduce() - function will return a single value according to the callback function
+const reduce = (array, initialValue, callback) => {
+    let accumulator = initialValue;
+    for (let i = 0; i < array.length; i++) {
+        accumulator += callback(array[i]);
+    }
+    return accumulator;
 }
 
