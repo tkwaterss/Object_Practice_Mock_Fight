@@ -9,7 +9,13 @@ const forEach = (array, callback) => {
 
 //.filter() - function will return a new array copy filtered via the callback Function
 const filter = (array, callback) => {
-
+    let filteredArray = []
+    for (let i = 0; i < array.length; i++) {
+        if (callback(array[i]) === true) {
+            filteredArray.push(array[i]);
+        }
+    }
+    return filteredArray;
 }
 
 
