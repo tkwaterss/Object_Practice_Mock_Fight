@@ -4,9 +4,6 @@ const forEach = (array, callback) => {
         return callback(array[i]);
     }
 }
-
-
-
 //.filter() - function will return a new array copy filtered via the callback Function
 const filter = (array, callback) => {
     let filteredArray = [];
@@ -17,8 +14,6 @@ const filter = (array, callback) => {
     }
     return filteredArray;
 }
-
-
 //.map() - function will return a new array with each element modified according to the callback function
 const map = (array, callback) => {
     let modifiedArray = [];
@@ -27,9 +22,6 @@ const map = (array, callback) => {
     }
     return modifiedArray;
 }
-
-
-
 //.reduce() - function will return a single value according to the callback function
 const reduce = (array, initialValue, callback) => {
     let accumulator = initialValue;
@@ -38,4 +30,3 @@ const reduce = (array, initialValue, callback) => {
     }
     return accumulator;
 }
-
